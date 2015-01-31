@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+
+
+
+
+    <!-- Directory Path -->
+
+    <record id="imp_category_form" model="ir.ui.view">
+            <field name="name">imp.category.form</field>
+            <field name="model">imp.category</field>
+            <field name="arch" type="xml">
+
+                <form string="Import Directory Path Configure">
+                  <sheet>
+                    <group col="2">
+					    <field name="name" />
+					    <field name="path" />
+                        <button name="import_category" type="object" string="Import Category" icon="gtk-network"/>
+                        <button name="search_parent" type="object" string="Search Parent" icon="terp-stage"/>
+                    </group>
+                  </sheet>
+                </form>
+
+
+
+            </field>
+    </record>
+
+
+        <record id="imp_category_tree" model="ir.ui.view">
+            <field name="name">imp.category.tree</field>
+            <field name="model">imp.category</field>
+            <field name="arch" type="xml">
+                 <tree string="Import Directory Path Configure">
+                     <field name="name" />
+                     <field name="path" />
+                 </tree>
+            </field>
+        </record>
+
+
+
+    <record id="menu_import_category_form" model="ir.actions.act_window">
+            <field name="name">Import Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">imp.category</field>
+            <field name="view_type">form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start configure import directory.
+              </p><p>
+                Import Category Easy
+              </p>
+            </field>
+    </record>
+
+
+
+
+     <menuitem id="menu_extend_import" name="Extend Import" parent="base.menu_administration" sequence="10" groups="base.group_no_one"/>
+
+        	<menuitem id="menu_import_category"
+              name="Import Category"
+              parent="menu_extend_import"
+              action="menu_import_category_form"
+		 />
+
+
+
+
+
+
+
+
+
+
+
+</data>
+</openerp>

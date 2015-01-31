@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+
+	<t t-extend="Product">
+		<t t-jquery=".product-img" t-operation="append">
+			<span t-attf-class="snap-tag #{product.snap_ok lte 0 ? 'oe_hidden':''}">
+
+                 <t t-if="product.snap_ok"> S </t>
+
+			</span>
+		</t>
+	</t>
+
+</templates>

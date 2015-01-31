@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <!-- view specific to search -->
+
+        <record id="product_template_search_view_snap" model="ir.ui.view">
+            <field name="name">product.template.search.snap.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <filter name="filter_to_sell" position="after">
+                   <filter name="filter_to_snap" string="Can be SNAP" icon="terp-accessories-archiver+" domain="[('snap_ok', '=', 1)]"/>
+                </filter>
+            </field>
+        </record>
+
+
+
+        <!-- view specific to product.template -->
+        <record id="product_template_snap_only_form_view" model="ir.ui.view">
+            <field name="name">product.template.snap.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="before">
+                    <field name="snap_ok"/>
+                </field>
+
+            </field>
+        </record>
+
+
+
+         <!-- product product -->
+
+        <record id="product_snap_normal_form_view" model="ir.ui.view">
+            <field name="name">product.product.snap.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+
+            <field name="arch" type="xml">
+                <field name="active" position="before">
+                    <field name="snap_ok"/>
+                </field>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </data>
+</openerp>
+
+
+
+
+
