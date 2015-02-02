@@ -102,6 +102,7 @@ class pos_adv_discount(osv.osv):
             ('simple_dsc', _('Simple Discount')),
             ('min_purchase_dsc', _('Minimum Purchase Discount')),
             ('buygetfree', _('Buy N Get one Free')),
+            ('BuyXforpriceY', _('Buy X for the price of Y')),
             ('paired_dsc', _('Paired Discount')),
             ('paired_set_dsc', _('Paired set Discount')),
             ]
@@ -156,11 +157,23 @@ class pos_adv_discount(osv.osv):
             return {'value': res}
 
 
-        if discount_type == "buygetfree" :
+        if discount_type == "BuyXforpriceY":
+
+            res['discount_type'] = 'BuyXforpriceY'
+
+            return {'value': res}
+
+
+        if discount_type == "buygetfree":
 
             res['discount_type'] = 'buygetfree'
 
-            return {'value': res}
+            warning = {
+                'title': _('Discount type!'),
+                'message' : _('If you require this feature please contact your system administrator.')
+            }
+
+            return {'warning': warning, 'value': res}
 
 
         if discount_type == "min_purchase_dsc":

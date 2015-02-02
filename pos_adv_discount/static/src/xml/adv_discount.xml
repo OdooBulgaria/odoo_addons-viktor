@@ -20,4 +20,29 @@
         </t>
     </t>
 
+
+  <!--  <ul class="info-list"> -->
+
+    	<t t-extend="Orderline">
+		<t t-jquery="ul[class='info-list']" t-operation="after">
+
+
+
+			<t t-if="line.get_discount() > 0">
+
+                <t t-if="line.selected">
+
+                    <span class='detail client-id'>Unit Disc. price:<t t-esc="widget.format_currency(line.get_dis_unit_price(),'Product Price')" /></span>
+                </t>
+
+			</t>
+
+
+
+
+		</t>
+	</t>
+
+
+
 </templates>

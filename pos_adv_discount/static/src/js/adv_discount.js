@@ -105,6 +105,10 @@ function pos_adv_discount(instance,module){
             var customer_id = this.pos.get('selectedOrder').get_client();
 
             var exc_spec_rule = [];
+
+            var exc_bxgfy = []
+
+
             var amounts_all = [];
             var amounts_product = [];
             var amounts_customer = [];
@@ -258,22 +262,22 @@ if ( advdiscount.discount_type == "simple_dsc" ) {
 }
 
 
-
+val_1
 
 
 
  //For buygetfree
-                if ( advdiscount.discount_type == "buygetfree" ){
+                if ( advdiscount.discount_type == "BuyXforpriceY" ){
 
 
+                        exc_bxgfy.push({
+                            id: advdiscount.product_1[0],
+                            pro_val_1: advdiscount.pro_val_1,
+                            pro_val_2: advdiscount.pro_val_2
+                        });
 
 
-
-
-                    //exc_spec_rule.push(advdiscount.product_1[0]);
-
-
-
+                    //exc_spec_rule.push(advdiscount.product_1[0]); pro_val_1
 
                 }
 //end
@@ -304,19 +308,54 @@ var currency_rounding = this.pos.currency.rounding;
                 var all_all_amount = [];
 
 
-                if (_.include(exc_spec_rule, product_id) == true) {
-
-                 //if product in special rule
-                 //   dsc_for_all = 0;
-                 //   dsc_for_product = 0;
-                 //   dsc_for_customer = 0;
-                 //   dsc_for_cp_product = 0;
+                var simplelist_exc_bxgfy = _.pluck(exc_bxgfy, 'id');
 
 
+                var action_bxgfy = false;
 
+
+                if (_.include(simplelist_exc_bxgfy, product_id) == true) {
+
+                    var prod_disc =  _.where(exc_bxgfy, {id: product_id});
+
+                    var val_1 = prod_disc[0].pro_val_1;
+                    var val_2 = prod_disc[0].pro_val_2;
+
+
+                    if (quant == val_1 ){
+
+
+                        action_bxgfy = true;
+
+
+
+                    }
 
 
                 }
+
+
+
+
+                if (action_bxgfy == true) {
+
+                  //orderline.set_unit_price(0.45)
+
+                    var u_price = orderline.get_unit_price();
+
+                    var val_2_total = val_2 * u_price;
+
+                    var new_price = val_2_total / val_1;
+
+                    var new_discount = convert_amount_to_pertent(u_price, u_price-new_price) ;
+
+                    //all_all_amount.push(new_discount);
+
+                    all_all_percent.push(new_discount);
+
+
+                }
+
                 else {
 
 
@@ -423,6 +462,21 @@ var currency_rounding = this.pos.currency.rounding;
 
 
     });
+
+
+    module.Orderline = module.Orderline.extend({
+
+        get_dis_unit_price:    function(){
+            var rounding = this.pos.currency.rounding;
+            return round_pr(this.get_unit_price() * (1 - this.get_discount()/100), rounding);
+        },
+
+
+    });
+
+
+
+
 
 
 

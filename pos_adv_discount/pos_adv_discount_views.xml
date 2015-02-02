@@ -124,17 +124,20 @@
 
 
 
-                    <div attrs="{'invisible': [('discount_type','not in',('buygetfree'))]}">
+                    <div attrs="{'invisible': [('discount_type','not in',('BuyXforpriceY'))]}">
 
-                        <separator string="Select Buy Products"/>
+                        <separator string="Select Options"/>
 
-                                <field name="product_1"  domain="['|',['type','=','sale'],['available_in_pos','&lt;&gt;',False] ]" >
-
-                                </field>
+                        <group>
 
 
+                            <field name="product_1" string="Product"  domain="['|',['type','=','sale'],['available_in_pos','&lt;&gt;',False] ]"/>
+
+                            <field name="pro_val_1" string="Buy amount"  />
+                            <field name="pro_val_2" string="Paid amount"  />
 
 
+                        </group>
 
 
 
