@@ -1,11 +1,11 @@
-function snap_product_at(instance, module){
+function snap_product_at(instance, module) {
 
 
-    var PosModelSuper = module.PosModel
-    module.PosModel = module.PosModel.extend({
+    module.PosWIC = module.PosModel;
+    module.PosModel = module.PosWIC.extend({
         load_server_data: function(){
             var self = this;
-            var loaded = PosModelSuper.prototype.load_server_data.call(this);
+            var loaded = module.PosWIC.prototype.load_server_data.call(this);
 
             loaded = loaded.then(function(){
                 return self.fetch(
@@ -23,8 +23,12 @@ function snap_product_at(instance, module){
             })
             return loaded;
         }
+    });
 
-    })
+
+
+
+
+
 
 }
-

@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014-Today OpenERP SA (<http://www.openerp.com>).
+#    Copyright (c) 2015 Domatix (http://domatix.com)
+#                       Angel Moua <angel.moya@domatix.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,33 +20,5 @@
 #
 ##############################################################################
 
-
-{
-    'name': 'Snap product',
-    'version': '1.0',
-    'category': 'Point of Sale',
-    'sequence': 6,
-    'summary': 'WIC product for the Point of Sale ',
-    'description': """
-
-=======================
-
-This module adds WIC product features to the Point of Sale:
-
-
-""",
-    'author': 'Viktor Vorobjov',
-    'depends': ['point_of_sale'],
-    'website': 'https://www.prolv.net',
-    'data': [
-        'views/templates.xml',
-        'views/views.xml',
-    ],
-    'qweb':[
-
-        'static/src/xml/snap_product.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
-
+import wizard
+import report

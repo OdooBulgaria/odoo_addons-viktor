@@ -35,7 +35,7 @@ class product_template(osv.osv):
     _inherit = 'product.template'
     _columns = {
 
-        'snap_ok': fields.boolean('SNAP', help="Determine if the it SNAP product"),
+        'snap_ok': fields.boolean('WIC', help="Determine if the it WIC product"),
 
 
         }

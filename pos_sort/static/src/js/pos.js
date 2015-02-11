@@ -39,13 +39,17 @@
 function pos_sort_at(instance, module){
 
 
-    module.PosModel = module.PosModel.extend({
+    module.PosSort = module.PosModel;
+    module.PosModel = module.PosSort.extend({
+
 
         initialize: function (session, attributes) {
 
-            module.PosModel.__super__.initialize.apply(this, arguments);
+            module.PosSort.prototype.initialize.apply(this, arguments);
+
             this.bystate = 0;
-        },
+
+  },
 
         get_bystate: function(){
             return this.bystate;
@@ -56,7 +60,6 @@ function pos_sort_at(instance, module){
         }
 
     })
-
 
 
     module.PosDB  =  module.PosDB.extend({

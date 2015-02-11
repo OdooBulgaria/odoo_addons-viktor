@@ -128,7 +128,9 @@ module.PaymentScreenWidget.include({
 
             var paymentLines = this.get('paymentLines');
 
-            var newPaymentline = new module.Paymentline({},{cashregister:cashregister});
+            //var newPaymentline = new module.Paymentline({},{cashregister:cashregister});
+
+             var newPaymentline = new module.Paymentline({},{cashregister:cashregister, pos:this.pos});
 
 
 
@@ -137,7 +139,7 @@ module.PaymentScreenWidget.include({
                 if (journal.debt)
                     val = -this.getChange() || 0
                 else
-                    if (journal.code == 'SNAP'){
+                    if (journal.code == 'WIC'){
                         val = this.getSnapDueLeft();
                     }
                     else{

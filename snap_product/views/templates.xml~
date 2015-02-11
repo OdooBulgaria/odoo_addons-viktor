@@ -13,14 +13,13 @@
           <xpath expr="." position="inside">
               <script type="text/javascript" src="/snap_product/static/src/js/snap_product.js"></script>
               <script type="text/javascript" src="/snap_product/static/src/js/main.js"></script>
-              <script type="text/javascript" src="/snap_product/static/src/js/pos.js"></script>
 
           </xpath>
         </template>
 
          <template id="assets_backend" name="pos assets" inherit_id="web.assets_backend">
           <xpath expr="." position="inside">
-
+              <script type="text/javascript" src="/snap_product/static/src/js/pos.js"></script>
           </xpath>
          </template>
     </data>

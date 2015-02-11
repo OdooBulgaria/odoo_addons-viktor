@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014-Today OpenERP SA (<http://www.openerp.com>).
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,33 +19,6 @@
 #
 ##############################################################################
 
+import pos_details_ext
 
-{
-    'name': 'Snap product',
-    'version': '1.0',
-    'category': 'Point of Sale',
-    'sequence': 6,
-    'summary': 'WIC product for the Point of Sale ',
-    'description': """
-
-=======================
-
-This module adds WIC product features to the Point of Sale:
-
-
-""",
-    'author': 'Viktor Vorobjov',
-    'depends': ['point_of_sale'],
-    'website': 'https://www.prolv.net',
-    'data': [
-        'views/templates.xml',
-        'views/views.xml',
-    ],
-    'qweb':[
-
-        'static/src/xml/snap_product.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

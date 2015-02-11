@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014-Today OpenERP SA (<http://www.openerp.com>).
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -15,37 +15,9 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
-
-{
-    'name': 'Snap product',
-    'version': '1.0',
-    'category': 'Point of Sale',
-    'sequence': 6,
-    'summary': 'WIC product for the Point of Sale ',
-    'description': """
-
-=======================
-
-This module adds WIC product features to the Point of Sale:
-
-
-""",
-    'author': 'Viktor Vorobjov',
-    'depends': ['point_of_sale'],
-    'website': 'https://www.prolv.net',
-    'data': [
-        'views/templates.xml',
-        'views/views.xml',
-    ],
-    'qweb':[
-
-        'static/src/xml/snap_product.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
+import pos_details_wzd
 
