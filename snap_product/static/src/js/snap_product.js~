@@ -1,8 +1,0 @@
-
-function snap_product_wd(instance,module){
-    var QWeb = instance.web.qweb;
-	var _t = instance.web._t;
-
-
-
-}
