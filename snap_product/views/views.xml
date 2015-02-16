@@ -10,7 +10,10 @@
             <field name="inherit_id" ref="product.product_template_search_view"/>
             <field name="arch" type="xml">
                 <filter name="filter_to_sell" position="after">
-                   <filter name="filter_to_snap" string="Can be WIC" icon="terp-accessories-archiver+" domain="[('snap_ok', '=', 1)]"/>
+                   <filter name="filter_to_wic" string="Can be WIC" icon="terp-accessories-archiver+" domain="[('wic_ok', '=', 1)]"/>
+                </filter>
+                <filter name="filter_to_sell" position="after">
+                   <filter name="filter_to_ebt" string="Can be EBT" icon="terp-accessories-archiver+" domain="[('ebt_ok', '=', 1)]"/>
                 </filter>
             </field>
         </record>
@@ -24,7 +27,8 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <field name="active" position="before">
-                    <field name="snap_ok"/>
+                    <field name="wic_ok"/>
+                    <field name="ebt_ok" attrs="{'readonly':[('wic_ok', '=', True)]}"/>
                 </field>
 
             </field>
@@ -41,7 +45,8 @@
 
             <field name="arch" type="xml">
                 <field name="active" position="before">
-                    <field name="snap_ok"/>
+                    <field name="wic_ok"/>
+                    <field name="ebt_ok" attrs="{'readonly':[('wic_ok', '=', True)]}"/>
                 </field>
             </field>
         </record>

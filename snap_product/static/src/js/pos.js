@@ -10,7 +10,7 @@ function snap_product_at(instance, module) {
             loaded = loaded.then(function(){
                 return self.fetch(
                     'product.product',
-                    ['snap_ok'],
+                    ['wic_ok','ebt_ok'],
                     [['sale_ok','=',true],['available_in_pos','=',true]],
                     {}
                 );
