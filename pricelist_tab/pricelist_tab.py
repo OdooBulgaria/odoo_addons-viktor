@@ -22,13 +22,10 @@ class product_template(osv.osv):
     _inherit = 'product.template'
     _columns = {
          # For display price in product.
-        'prices_ids': fields.one2many('product.pricelist.item', 'product_id', 'Supplier'),
+        'prices_ids': fields.one2many('product.pricelist.item', 'product_tmpl_id', 'Supplier'),
        # 'retail_price': fields.float('Retail Price', digits_compute=dp.get_precision('Product Price'), help="Retail price."),
 
         }
-
-product_template()
-
 
 
 

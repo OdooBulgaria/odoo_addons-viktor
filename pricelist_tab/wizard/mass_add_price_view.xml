@@ -8,7 +8,7 @@
             <field name="name">Add Price</field>
             <field name="model">product.mass_add_price</field>
             <field name="arch" type="xml">
-                <form string="Price List" version="7.0">
+                <form string="Price List">
                     <group string="Mass Add in Pricelist Version.">
                         <field colspan="2" name="price_version_id"/>
                         <field colspan="2" name="unit_type"/>

@@ -26,7 +26,12 @@ class product_mass_add_price(osv.osv_memory):
 
         #_logger.warning("Context = %s", context)
         # it id product.
-        prod_id = context.get('active_id')
+        prod_id_tmp = context.get('active_id')
+
+        db_source_obj = self.pool.get('product.product')
+        db_source_data = db_source_obj.browse(cr, uid, prod_id_tmp, context=context)
+
+        product_tmpl_id = db_source_data.product_tmpl_id.id
 
         # get fields from form
         res = self.read(cr, uid, ids, ['price_version_id','unit_type'], context=context)
@@ -38,47 +43,73 @@ class product_mass_add_price(osv.osv_memory):
         # it type for circulation or blank. Determination in res.extended.
         unit_type = res['unit_type']
 
-        try:
-            # Execute the SQL command
-            type_opt = unit_type
-            cr.execute('select id_opt AS oid , name AS oname from res_extended where type_opt=%s order by 1', (type_opt,))
-            data = cr.dictfetchall()
+        if unit_type == "unit":
+            try:
 
-            rule_name2 = ''
+                self.pool.get('product.pricelist.item').create(cr, uid,
+                                                 {
+                                                 'name': unit_type,
+                                                 #'product_id': int(prod_id),
+                                                 #'product_tmpl_id': int(product_tmpl_id),
+                                                 'product_tmpl_id': int(prod_id_tmp),
+                                                 'min_quantity' : 0,
+                                                 'sequence': 0,
+                                                 'price_version_id': int(price_version_id),
+                                                 'base': 1,
+                                                 'price_surcharge': 0.00,
+                                                 })
 
-            for rec in data:
+            except:
+                return False
 
-                rule_name1 = ''
+        else:
 
-                oid = rec.get('oid')
-                oname = rec.get('oname','')
 
-                rule_name1 = oname
-                rule_name = type_opt + " From %s to %s" % (rule_name1, rule_name2)
-                rule_name2 = oname
 
-                ## It can Direct make price rule in Price item
-                try:
-                    self.pool.get('product.pricelist.item').create(cr, uid,
-                                                {
-                                                'name': rule_name,
-                                                'product_id': int(prod_id),
-                                                #'product_tmpl_id': int(prod_id),
-                                                'min_quantity' : int(oname),
-                                                'sequence': int(oid),
-                                                'price_version_id': int(price_version_id),
-                                                'base': 1,
-                                                'price_surcharge': 0.00,
-                                                })
-                except:
-                     return False
+            try:
+                # Execute the SQL command
+                type_opt = unit_type
+                cr.execute('select id_opt AS oid , name AS oname from res_extended where type_opt=%s order by 1', (type_opt,))
+                data = cr.dictfetchall()
 
-        except:
-            return False
+                rule_name2 = ''
+
+                for rec in data:
+
+                    rule_name1 = ''
+
+                    oid = rec.get('oid')
+                    oname = rec.get('oname','')
+
+                    rule_name1 = oname
+                    rule_name = type_opt + " From %s to %s" % (rule_name1, rule_name2)
+                    rule_name2 = oname
+
+                    _logger.warning("Product ID: %s, Product Template ID: %s", prod_id_tmp, product_tmpl_id )
+
+                    ## It can Direct make price rule in Price item
+                    try:
+
+                        self.pool.get('product.pricelist.item').create(cr, uid,
+                                                 {
+                                                 'name': rule_name,
+                                                 #'product_id': int(prod_id),
+                                                 #'product_tmpl_id': int(product_tmpl_id),
+                                                 'product_tmpl_id': int(prod_id_tmp),
+                                                 'min_quantity' : int(oname),
+                                                 'sequence': int(oid),
+                                                 'price_version_id': int(price_version_id),
+                                                 'base': 1,
+                                                 'price_surcharge': 0.00,
+                                                 })
+
+                    except:
+                        return False
+
+            except:
+                return False
 
         return True
 
 
-product_mass_add_price()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

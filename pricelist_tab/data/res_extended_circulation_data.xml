@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <openerp>
     <data noupdate="1">
+                <record id="res_extended_circulation_500" model="res.extended">
+            <field name="type_opt">circulation</field>
+            <field name="id_opt">590</field>
+            <field name="name">0</field>
+            <field name="value_opt">0</field>
+        </record>
         <record id="res_extended_circulation_500" model="res.extended">
             <field name="type_opt">circulation</field>
             <field name="id_opt">490</field>

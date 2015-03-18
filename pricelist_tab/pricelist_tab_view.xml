@@ -10,7 +10,7 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
-                  <xpath expr="/form/sheet/notebook" position="inside" version="7.0">
+                  <xpath expr="/form/sheet/notebook" position="inside" >
                 <page string="Prices" >
                     <group >
                         <button colspan="2"
@@ -21,7 +21,7 @@
                                 class="oe_inline" />
                     </group>
                     <group colspan="2" col="2">
-                        <field name="prices_ids" nolabel="1"  widget="one2many_list" >
+                        <field name="prices_ids" nolabel="1"  widget="one2many_list" options="{'create': false, 'create_edit': false}" >
                              <tree string="Price List">
                                  <field name="sequence"/>
                                  <field name="name"/>
@@ -54,7 +54,7 @@
             <field name="inherit_id" ref="product.product_normal_form_view"/>
 
             <field name="arch" type="xml">
-                  <xpath expr="/form/sheet/notebook" position="inside" version="7.0">
+                  <xpath expr="/form/sheet/notebook" position="inside" >
                 <page string="Prices" >
                     <group >
                         <button colspan="2"
@@ -65,7 +65,7 @@
                                 class="oe_inline" />
                     </group>
                     <group colspan="2" col="2">
-                        <field name="prices_ids" nolabel="1"  widget="one2many_list" >
+                        <field name="prices_ids" nolabel="1"  widget="one2many_list" options="{'create': false, 'create_edit': false}">
                              <tree string="Price List">
                                  <field name="sequence"/>
                                  <field name="name"/>
@@ -95,21 +95,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    <!-- it for posible add price from product -->
     <record id="price_versionid_form_view" model="ir.ui.view">
         <field name="name">product.pricelist.item.form</field>
@@ -118,7 +103,7 @@
         <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
         <field name="arch" type="xml">
            <!-- <xpath expr="/form/sheet/notebook" position="inside" > position="attributes">-->
-            <xpath expr="//group[@string='Price Computation']" position="before">
+            <xpath expr="//separator[@string='Price Computation']" position="before">
            <!-- <xpath expr="//field[@name='product_id']" position='before'> -->
                 <group col="4" string="Price version">
                     <field name="price_version_id"/>
