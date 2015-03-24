@@ -38,7 +38,10 @@ from openerp import models, api
 
 import os
 import csv
+
 import re
+import io
+import codecs
 
 import itertools
 import operator
@@ -46,6 +49,10 @@ import operator
 
 
 _logger = logging.getLogger(__name__) # Need for message in console.
+
+def utf_8_encoder(unicode_csv_data):
+    for line in unicode_csv_data:
+        yield line.encode('utf-8')
 
 
 class ImpLafaProduct(osv.osv):
@@ -60,11 +67,12 @@ class ImpLafaProduct(osv.osv):
     def _log_import(self, cr, uid, l_file, rwa, l_messagem): # File name , Type accees to file r- read, w - write, a - append, Text message
 
         try:
-            log_import_file = open(l_file, rwa)
+            log_import_file = codecs.open(l_file, rwa, encoding='utf-8')
         except Exception, e:
              ierror = tools.ustr(e)
              return self.pool.get('warning').info(cr, uid, title='Error source log', message="Error: %s " %(ierror))
 
+        #_logger.warning("Error: %s", l_messagem )
         log_import_file.write(l_messagem + os.linesep)
         log_import_file.close()
 
@@ -89,13 +97,13 @@ class ImpLafaProduct(osv.osv):
         keys = []
 
         try:
-            import_file = open(os.path.join(source_dir, filename), 'r')
+            import_file = codecs.open(os.path.join(source_dir, filename), 'r', encoding='utf-8')
 
         except Exception, e:
              ierror = tools.ustr(e)
              return self.pool.get('warning').info(cr, uid, title='Error source double', message="Error: %s " %( ierror ))
 
-        csvData = csv.reader(import_file)
+        csvData = csv.reader(utf_8_encoder(import_file))
 
         #Add date time to already log file
         filename_log_double = filename+'__import_log_double.txt'
@@ -118,6 +126,8 @@ class ImpLafaProduct(osv.osv):
         import_file.close()
 
         return keys
+
+
 
 
     def import_product(self, cr, uid, ids, context=None):
@@ -145,13 +155,14 @@ class ImpLafaProduct(osv.osv):
 
 
         try:
-            import_file = open(os.path.join(source_dir, filename), 'r')
+            import_file = codecs.open(os.path.join(source_dir, filename), 'r', encoding='utf-8')
         except Exception, e:
              ierror = tools.ustr(e)
              return self.pool.get('warning').info(cr, uid, title='Error source import', message="Error: %s " %( ierror ))
 
         #csvData = csv.reader(import_file, delimiter=',', quotechar="'")
-        csvData = csv.reader(import_file)
+        #csv_reader = csv.reader(utf_8_encoder(unicode_csv_data),dialect=dialect, **kwargs)
+        csvData = csv.reader(utf_8_encoder(import_file))
 
 #check double ref. number in csv
         d_keys = self._check_double(cr, uid, source_dir, filename)
@@ -169,7 +180,7 @@ class ImpLafaProduct(osv.osv):
             if rowNum > 0 and row[0] not in d_keys:
 
                 imp_ref = row[0]
-                imp_name = row[1]
+                imp_name = row[1].decode('utf-8')
                 imp_sale_price = row[2]
                 imp_pos_cat = row[3]
 
@@ -186,7 +197,7 @@ class ImpLafaProduct(osv.osv):
                 #self._log_import(cr, uid, source_log, 'a', 'Import: Ref = %s, name = %s, Cat = %s' % (imp_ref, imp_name, imp_pos_cat) )
 
 
-                product_search = product_product_obj.search(cr, uid, [('default_code', '=', imp_ref)], context=context, count=False)
+                product_search = product_product_obj.search(cr, uid, [('default_code', '=', imp_ref), '|', ('active', '=', True), ('active', '=', False)], context=context, count=False)
 
                 if not product_search:
 
