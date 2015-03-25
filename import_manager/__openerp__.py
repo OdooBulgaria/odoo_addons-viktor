@@ -13,6 +13,7 @@
     'depends' : ['base_setup','warning_popup', 'product','sale'],
     'data': [
         'ean_import_view.xml',
+        'wizard/fix_category_view.xml',
     ],
     'installable': True,
 }
