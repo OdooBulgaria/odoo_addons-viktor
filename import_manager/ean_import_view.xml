@@ -123,7 +123,7 @@
 
 
         	<menuitem id="menu_lafa_category"
-              name="Import lafa. Category"
+              name="lafa. Import Category"
               parent="menu_extend_import"
               action="menu_lafa_category_form"
 		 />
@@ -140,7 +140,9 @@
                     <group col="2">
 					    <field name="name" />
 					    <field name="path" />
-                        <button name="update_category" type="object" string="Update Category" icon="gtk-network"/>
+                        <button name="update_pos_category" type="object" string="Update POS Category" icon="gtk-network"/>
+                        <button name="update_internal_category" type="object" string="Update Internal Category" icon="gtk-network"/>
+                        <button name="update_pos_to_internal_category" type="object" string="Update Internal from POS Category" icon="gtk-network"/>
                     </group>
                   </sheet>
                 </form>
@@ -183,7 +185,7 @@
 
 
         	<menuitem id="menu_upd_lafa_product"
-              name="Update lafa. cat. Product"
+              name="lafa. Update categories"
               parent="menu_extend_import"
               action="menu_upd_lafa_product_form"
 		 />
@@ -241,10 +243,8 @@
     </record>
 
 
-
-
         	<menuitem id="menu_imp_lafa_product"
-              name="Import lafa. Product"
+              name="lafa. Import/Update Product"
               parent="menu_extend_import"
               action="menu_imp_lafa_product_form"
 		 />
