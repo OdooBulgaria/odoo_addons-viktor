@@ -61,6 +61,7 @@ class ImpLafaProduct(osv.osv):
     _columns = {
                     'name': fields.char('Name', size=100, required='True'),
                     'path': fields.char('Path for import', size=100, required='True'),
+                    'zero': fields.boolean('0 for Interna Ref. - 0xxxxxxx'),
 
                 }
 
@@ -140,6 +141,8 @@ class ImpLafaProduct(osv.osv):
         file_name = imp_category_data.name
         dir_path = imp_category_data.path
 
+        zero = imp_category_data.zero
+
         filename = file_name
         source_dir = dir_path
 
@@ -196,12 +199,21 @@ class ImpLafaProduct(osv.osv):
                 #self._log_import(cr, uid, source_log, 'a', '-------------------------------------------------')
                 #self._log_import(cr, uid, source_log, 'a', 'Import: Ref = %s, name = %s, Cat = %s' % (imp_ref, imp_name, imp_pos_cat) )
 
+                if zero:
+                        imp_ref = '0%s' % (imp_ref)
+
 
                 product_search = product_product_obj.search(cr, uid, [('default_code', '=', imp_ref), '|', ('active', '=', True), ('active', '=', False)], context=context, count=False)
+
+
+
 
                 if not product_search:
 
                     pos_category_search = pos_category_obj.search(cr, uid, [('name', '=', imp_pos_cat)], context=context, count=False)
+
+
+
 
                     values = {
                         'default_code': imp_ref,
@@ -210,13 +222,13 @@ class ImpLafaProduct(osv.osv):
                         'pos_categ_id': pos_category_search[0]
                     }
 
-                    #_logger.warning("No in database: Ref = %s, Name = %s, Cat = %s, POS category ID = %s", imp_ref, imp_name, imp_pos_cat, pos_category_search[0] )
-                    #_logger.warning("Try Import: %s", imp_ref )
+                    _logger.warning("No in database: Ref = %s, Name = %s, Cat = %s, POS category ID = %s", imp_ref, imp_name, imp_pos_cat, pos_category_search[0] )
+                    _logger.warning("Try Import: %s", imp_ref )
 
 
                     try_import = self._create_product(cr, uid, values, source_log)
 
-                    #_logger.warning("Import Result: %s", try_import )
+                    _logger.warning("Import Result: %s", try_import )
 
                     rownew += 1
 
@@ -227,7 +239,7 @@ class ImpLafaProduct(osv.osv):
                     product_data = product_product_obj.browse(cr, uid, product_search, context=context)
                     self._log_import(cr, uid, source_log_already,'a', 'CSV -> Ref = %s, Name = %s : Odoo -> oRef = %s, oName = %s' % (imp_ref, imp_name, product_data.default_code, product_data.name )  )
 # Debug log
-                    #_logger.warning("Already in: Ref = %s, oRef = %s, oNAme = %s", imp_ref, product_data.default_code, product_data.name )
+                    _logger.warning("Already in: Ref = %s, oRef = %s, oNAme = %s", imp_ref, product_data.default_code, product_data.name )
 
 
             rowNum += 1
@@ -240,7 +252,87 @@ class ImpLafaProduct(osv.osv):
         return self.pool.get('warning').info(cr, uid, title='Import Category', message="Import for: %s  - %s , try import = %s, but only new = %s" %( file_name, dir_path, rowNum-1, rownew))
 
 
+    def unlink_product(self, cr, uid, ids, context=None):
 
+        context = dict(context or {})
+#Get import paramets
+        imp_category_obj = self.pool.get('imp.lafa.product')
+        imp_category_data = imp_category_obj.browse(cr, uid, ids, context=context)
+
+        file_name = imp_category_data.name
+        dir_path = imp_category_data.path
+
+        filename = file_name
+        source_dir = dir_path
+
+#Add date time to main log file
+        filename_log = filename+'__unlink_log.txt'
+        source_log = os.path.join(source_dir, filename_log)
+        self._log_import(cr, uid, source_log, 'a', datetime.datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%SZ") )
+
+#Add date time to already log file
+        filename_log_unlink = filename+'__unlink_log_delete.txt'
+        source_log_unlink = os.path.join(source_dir, filename_log_unlink)
+        self._log_import(cr, uid, source_log_unlink, 'a', datetime.datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%SZ") )
+
+
+        try:
+            import_file = codecs.open(os.path.join(source_dir, filename), 'r', encoding='utf-8')
+        except Exception, e:
+             ierror = tools.ustr(e)
+             return self.pool.get('warning').info(cr, uid, title='Error source import', message="Error: %s " %( ierror ))
+
+        csvData = csv.reader(utf_8_encoder(import_file))
+
+        product_product_obj = self.pool.get('product.product')
+
+        rowNum = 0
+        rownew = 0
+
+#Start reading CSV
+        for row in csvData:
+
+                imp_ref = row[0]
+                imp_name = row[1].decode('utf-8')
+                imp_sale_price = row[2]
+                imp_pos_cat = row[3]
+
+
+
+#debug view
+                #_logger.warning("-------------------------------------------------")
+                #_logger.warning("Import: Ref = %s, name = %s, Cat = %s", imp_ref,imp_name, imp_pos_cat )
+
+#write to log file
+                #self._log_import(cr, uid, source_log, 'a', '-------------------------------------------------')
+                #self._log_import(cr, uid, source_log, 'a', 'Import: Ref = %s, name = %s, Cat = %s' % (imp_ref, imp_name, imp_pos_cat) )
+
+
+                product_search = product_product_obj.search(cr, uid, [('default_code', '=', imp_ref), '|', ('active', '=', True), ('active', '=', False)], context=context, count=False)
+
+                unlink_result = False;
+
+                if product_search:
+
+
+                    unlink_result = product_product_obj.unlink(cr, uid, product_search )
+
+                    _logger.warning("Product for Unlink: IDS = %s, Ref = %s, Result = %s", product_search, imp_ref, unlink_result )
+
+
+                    rowNum += 1
+
+                self._log_import(cr, uid, source_log_unlink, 'a', ' IDS = %s, Ref = %s, Result = %s' % (product_search, imp_ref, unlink_result) )
+
+
+
+
+        if rowNum == 0:
+            rowNum+1
+
+        self._log_import(cr, uid, source_log, 'a', 'Import for: %s  - %s , try import = %s, but only new = %s' % (file_name, dir_path, rowNum-1, rownew) )
+
+        return self.pool.get('warning').info(cr, uid, title='Try Deleted Products', message="Delete for: %s  - %s , try delete = %s, but only deleted = %s" %( file_name, dir_path, rowNum-1, rownew))
 
 
 

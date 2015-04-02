@@ -203,7 +203,10 @@
                     <group col="2">
 					    <field name="name" />
 					    <field name="path" />
+                        <field name="zero" />
                         <button name="import_product" type="object" string="Import Product" icon="gtk-network"/>
+
+                        <button name="unlink_product" type="object" string="Try Delete" icon="gtk-network"/>
                     </group>
                   </sheet>
                 </form>
