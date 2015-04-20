@@ -297,8 +297,6 @@ class ImpLafaProduct(osv.osv):
                 imp_sale_price = row[2]
                 imp_pos_cat = row[3]
 
-
-
 #debug view
                 #_logger.warning("-------------------------------------------------")
                 #_logger.warning("Import: Ref = %s, name = %s, Cat = %s", imp_ref,imp_name, imp_pos_cat )
