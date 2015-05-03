@@ -70,6 +70,7 @@ class UpdLafaProduct(osv.osv):
              return self.pool.get('warning').info(cr, uid, title='Error source', message="Error: %s " %( ierror ))
 
         #csvData = csv.reader(import_file, delimiter=',', quotechar="'")
+
         csvData = csv.reader(import_file)
 
         pos_category_obj = self.pool.get('pos.category')

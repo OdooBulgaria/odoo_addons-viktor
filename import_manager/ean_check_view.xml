@@ -51,7 +51,7 @@
 
 
     <menuitem id="menu_ean_check"
-              name="lafa. EAN check Product"
+              name="Barcode check"
               parent="import_manager.menu_extend_import"
               action="menu_check_ean_product_form"
             />

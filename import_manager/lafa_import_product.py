@@ -171,6 +171,8 @@ class ImpLafaProduct(osv.osv):
         d_keys = self._check_double(cr, uid, source_dir, filename)
         #_logger.warning("Double: Keys = %s", d_keys)
 
+
+        product_category_obj = self.pool.get('product.category')
         pos_category_obj = self.pool.get('pos.category')
         product_product_obj = self.pool.get('product.product')
 
@@ -199,8 +201,8 @@ class ImpLafaProduct(osv.osv):
                 #self._log_import(cr, uid, source_log, 'a', '-------------------------------------------------')
                 #self._log_import(cr, uid, source_log, 'a', 'Import: Ref = %s, name = %s, Cat = %s' % (imp_ref, imp_name, imp_pos_cat) )
 
-                if zero:
-                        imp_ref = '0%s' % (imp_ref)
+              #  if zero:
+              #          imp_ref = '0%s' % (imp_ref)
 
 
                 product_search = product_product_obj.search(cr, uid, [('default_code', '=', imp_ref), '|', ('active', '=', True), ('active', '=', False)], context=context, count=False)
@@ -211,7 +213,7 @@ class ImpLafaProduct(osv.osv):
                 if not product_search:
 
                     pos_category_search = pos_category_obj.search(cr, uid, [('name', '=', imp_pos_cat)], context=context, count=False)
-
+                    product_category_search = product_category_obj.search(cr, uid, [('name', '=', imp_pos_cat)], context=context, count=False)
 
 
 
@@ -219,7 +221,8 @@ class ImpLafaProduct(osv.osv):
                         'default_code': imp_ref,
                         'name': imp_name,
                         'list_price' : imp_sale_price,
-                        'pos_categ_id': pos_category_search[0]
+                        'pos_categ_id': pos_category_search[0],
+                        'categ_id': product_category_search[0]
                     }
 
                     _logger.warning("No in database: Ref = %s, Name = %s, Cat = %s, POS category ID = %s", imp_ref, imp_name, imp_pos_cat, pos_category_search[0] )
