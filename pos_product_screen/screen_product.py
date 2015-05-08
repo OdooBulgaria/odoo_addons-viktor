@@ -19,34 +19,22 @@
 #
 ##############################################################################
 
+import logging
 
-{
-    'name': 'POS product screen',
-    'version': '1.0',
-    'category': 'Point of Sale',
-    'sequence': 6,
-    'summary': 'POS product screen for the Point of Sale ',
-    'description': """
+import openerp
+from openerp import tools
 
-=======================
+from openerp import models, fields, api, osv
+from openerp.tools.translate import _
 
-This module adds POS product screen features to the Point of Sale:
+_logger = logging.getLogger(__name__)
 
 
-""",
-    'author': 'Viktor Vorobjov',
-    'depends': ['point_of_sale'],
-    'website': 'https://www.prolv.net',
-    'data': [
-        'views/templates.xml',
-        'views/screen_product_views.xml',
-       
-    ],
-    'qweb':[
 
-        'static/src/xml/hide.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    pos_screen = fields.Boolean(string='POS screen', help='Determine: show or not on POS Main Screen .')
+
+
 
