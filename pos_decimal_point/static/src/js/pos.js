@@ -23,12 +23,24 @@ function pos_descimal_md(instance, module){
                 var value2 = valr.slice(val_len - 2,val_len);
                 value = value1 + '.' + value2;
 
-                $('.paymentline.selected .paymentline-input').bind('keyup change', function() {
+                $('.paymentline.selected .paymentline-input').bind('keyup change', function(e) {
 
-                $('.paymentline.selected .paymentline-input').val(value);
+                    if (e.which == 8 && val_len == 1 ) {//backspace
+                        value = "";
+                    }
+
+
+
+                        $('.paymentline.selected .paymentline-input').val(value);
+
+
 
                 });
 
+             }
+             else
+             {
+                 value = "";
              }
 
              module.DecimalPaymentline.prototype.set_amount.call(this,value);
