@@ -32,7 +32,7 @@
     
     """,
     'website' : 'http://www.prolv.net',
-    'depends' : ['base_setup','product','point_of_sale'],
+    'depends' : ['base_setup','product','point_of_sale', 'qweb_usertime'],
     'data': [
         'data/report_paperformat.xml',
         'point_of_sale_report.xml',
