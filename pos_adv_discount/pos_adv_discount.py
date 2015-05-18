@@ -105,12 +105,11 @@ class pos_adv_discount(osv.osv):
             ('BuyXforpriceY', _('Buy X for the price of Y')),
             ('paired_dsc', _('Paired Discount')),
             ('paired_set_dsc', _('Paired set Discount')),
+            ('BuyXforFixedpriceY', _('Buy X for Fixed price Y')),
+
             ]
 
         return pres_filter
-
-
-
 
 
     def on_change_amount(self, cr, uid, ids, amount=False, context=None):
@@ -160,6 +159,12 @@ class pos_adv_discount(osv.osv):
         if discount_type == "BuyXforpriceY":
 
             res['discount_type'] = 'BuyXforpriceY'
+
+            return {'value': res}
+
+        if discount_type == "BuyXforFixedpriceY":
+
+            res['discount_type'] = 'BuyXforFixedpriceY'
 
             return {'value': res}
 
@@ -413,11 +418,6 @@ class pos_adv_discount(osv.osv):
             if pfilter in 'category' and len(categories.ids) == 0:
 
                 raise osv.except_osv(_('Error!'), _("Cannot save! You must need select categories."))
-
-
-
-
-
 
 
 

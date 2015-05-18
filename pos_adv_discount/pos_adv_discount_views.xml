@@ -65,7 +65,7 @@
                             </page>
 
 
-            <!-- Customer Tab -->
+            <!-- Configuration Tab -->
                             <page string="Configuration">
 
 
@@ -135,6 +135,24 @@
 
                             <field name="pro_val_1" string="Buy amount"  />
                             <field name="pro_val_2" string="Paid amount"  />
+
+
+                        </group>
+
+     </div>
+                                 <!-- Buy X for the fixed price Y  -->
+
+                     <div attrs="{'invisible': [('discount_type','not in',('BuyXforFixedpriceY'))]}">
+
+                        <separator string="Select Options"/>
+
+                        <group>
+
+
+                            <field name="product_1" string="Product"  domain="['|',['type','=','sale'],['available_in_pos','&lt;&gt;',False] ]"/>
+
+                            <field name="pro_val_1" string="Buy amount"  />
+                            <field name="pro_val_2" string="Price amount"  />
 
 
                         </group>
