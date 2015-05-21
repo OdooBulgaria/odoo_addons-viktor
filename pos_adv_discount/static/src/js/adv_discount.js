@@ -48,6 +48,10 @@ function convert_amount_to_pertent(amount, discount) {
 }
 
 
+function integerDivision(x, y){
+    return x/y>>0
+}
+
 
 
 
@@ -341,7 +345,7 @@ var currency_rounding = this.pos.currency.rounding;
                 var simplelist_exc_buy_x_get_fixed_price = _.pluck(exc_buy_x_get_fixed_price, 'id'); //exc_buy_x_get_fixed_price
                 var action_buy_x_get_fixed_price = false;
 
-                    if (_.include(simplelist_exc_buy_x_get_fixed_price, product_id) == true) {
+                if (_.include(simplelist_exc_buy_x_get_fixed_price, product_id) == true) {
 
                     var prod_disc =  _.where(exc_buy_x_get_fixed_price, {id: product_id});
 
@@ -351,11 +355,11 @@ var currency_rounding = this.pos.currency.rounding;
 
 
 
-                    if (quant % val_1 == 0){
+        //            if (quant % val_1 == 0){
 
                         action_buy_x_get_fixed_price = true;
 
-                    }
+       //             }
 
 
                 }
@@ -365,17 +369,23 @@ var currency_rounding = this.pos.currency.rounding;
 
                 if (action_bxgfy == true || action_buy_x_get_fixed_price == true ) {
 
+
+                    var u_price = orderline.get_unit_price();
+                    var new_discount = 0;
+                    var new_price = 0;
+
+
                     if (action_bxgfy == true) {
 
                         //orderline.set_unit_price(0.45)
 
-                        var u_price = orderline.get_unit_price();
+
 
                         var val_2_total = val_2 * u_price;
 
                         var new_price = val_2_total / val_1;
 
-                        var new_discount = convert_amount_to_pertent(u_price, u_price - new_price);
+                        new_discount = convert_amount_to_pertent(u_price, u_price - new_price);
 
 
                         //all_all_amount.push(new_discount);
@@ -388,13 +398,43 @@ var currency_rounding = this.pos.currency.rounding;
 
                         //orderline.set_unit_price(0.45)
 
-                        var u_price = orderline.get_unit_price();
 
-                        var val_2_total = val_2;
 
-                        var new_price = val_2_total / val_1;
+                        var mod_div = quant % val_1;
 
-                        var new_discount = convert_amount_to_pertent(u_price, u_price - new_price);
+                        if (mod_div == 0){
+
+
+                            new_price = val_2 / val_1;
+
+                            new_discount = convert_amount_to_pertent(u_price, u_price - new_price);
+
+                        }
+
+                        else {
+
+                            if (quant > 1) {
+
+                                var int_div = integerDivision(quant,val_1);
+
+                                var disc_quant = int_div * val_1;
+                                new_price = val_2 / val_1;
+                                var disc_amount = disc_quant * new_price;
+
+                                var dif_quant = quant - disc_quant;
+                                var dif_amount = u_price * dif_quant;
+
+                                var price_for_disc = (disc_amount + dif_amount) / quant ;
+
+                                new_discount = convert_amount_to_pertent(u_price, u_price - price_for_disc);
+
+
+                            }
+
+
+
+                        }
+
 
 
                         //all_all_amount.push(new_discount);
