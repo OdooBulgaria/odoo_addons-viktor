@@ -135,6 +135,7 @@
                     </tr>
                     <tr>
                         <td><strong>Total paid</strong></td>
+                        <td><strong>Total paid</strong></td>
                         <td class="text-right">
                             <strong t-esc="formatLang(getpaidtotal2(), dp='Sale Price', currency_obj=res_company.currency_id)"/>
                         </td>

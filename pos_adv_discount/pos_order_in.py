@@ -91,8 +91,6 @@ class pos_order(osv.osv):
                 }, context=context)
 
 
-
-
                 #_logger.warning("amount_sub %s", amount_dis_sub )
 
                 period = account_period_obj.find(cr, uid, context=dict(context or {}, company_id=current_company.id))[0]

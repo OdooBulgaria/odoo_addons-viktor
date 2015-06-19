@@ -115,7 +115,7 @@ class db_dir_path(osv.osv):
         else:
             os.chmod(d, 0700)
 
-        return self.pool.get('warning').info(cr, uid, title='Check Availabel', message="Check path for: %s  - %s, check path: %s "%( dir_name, dir_path, d))
+        return self.pool.get('warning').info(cr, uid, title='Check Availability', message="Check path for: %s  - %s, check path: %s "%( dir_name, dir_path, d))
 
 
 
@@ -282,6 +282,8 @@ class db_backup_action(osv.osv):
             ba_data = backup_action_obj.browse(cr, uid, backup_action, context=context)
 
             #_logger.warning("Active Action: %s", backup_action)
+
+            
 
             host = ba_data.db_backup_source_id.host
             port = ba_data.db_backup_source_id.port

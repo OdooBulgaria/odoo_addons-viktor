@@ -148,7 +148,7 @@ ${object.date_deadline or ''}<br />
                     <group col="2">
 					    <field name="name" />
 					    <field name="path" />
-                        <button name="test_path" type="object" string="Test Available" icon="gtk-network"/>
+                        <button name="test_path" type="object" string="Check Availability" icon="gtk-network"/>
                     </group>
                   </sheet>
                 </form>

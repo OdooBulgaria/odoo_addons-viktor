@@ -22,10 +22,10 @@ class warning(osv.osv_memory):
 
         return res and res[1] or False
 
-    def nmessage(self, cr, uid, myid, context): #   def test_yadisk_connection(self, cr, uid, ids, context=None):
+    def nmessage(self, cr, uid, myid, context):
         mymessage = self.browse(cr, uid, myid)
         message_type = [t[1]for t in WARNING_TYPES if mymessage.type == t[0]][0]
-        #print '%s: %s' % (_(message_type), _(mymessage.title))
+
         res = {
             'name': '%s: %s' % (_(message_type), _(mymessage.title)),
             'view_type': 'form',

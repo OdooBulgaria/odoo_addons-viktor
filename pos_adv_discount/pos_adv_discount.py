@@ -1,23 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014-Today OpenERP SA (<http://www.openerp.com>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
 import logging
 
@@ -47,7 +28,6 @@ class pos_adv_discount(osv.osv):
            :pres_filter: list of tuple
         """
         #default available choices
-       # pres_filter = [('all', _('All products')), ('category', _('Specific product categories')),('product', _('Specific products')), ('special', _('Special Rules')) ]
         pres_filter = [
             ('all', _('All products')),
             ('category', _('Specific product categories')),
@@ -131,12 +111,12 @@ class pos_adv_discount(osv.osv):
         res = {}
 
         if value_method == "" or value_method == "none" or value_method is False:
-            #res['amount'] = 0
+
             res['value_method'] = 'percent'
             return {'value': res}
 
         if value_method == "amount":
-            #res['amount'] = 0
+
             res['value_method'] = 'percent'
 
             warning = {
@@ -151,72 +131,55 @@ class pos_adv_discount(osv.osv):
         res = {}
 
         if discount_type == "" or discount_type == "none" or discount_type is False:
-            #res['amount'] = 0
+
             res['discount_type'] = 'simple_dsc'
             return {'value': res}
-
 
         if discount_type == "BuyXforpriceY":
 
             res['discount_type'] = 'BuyXforpriceY'
-
             return {'value': res}
 
         if discount_type == "BuyXforFixedpriceY":
 
             res['discount_type'] = 'BuyXforFixedpriceY'
-
             return {'value': res}
-
 
         if discount_type == "buygetfree":
 
             res['discount_type'] = 'buygetfree'
-
             warning = {
                 'title': _('Discount type!'),
                 'message' : _('If you require this feature please contact your system administrator.')
             }
-
             return {'warning': warning, 'value': res}
-
 
         if discount_type == "min_purchase_dsc":
 
             res['discount_type'] = 'simple_dsc'
-
             warning = {
                 'title': _('Discount type!'),
                 'message' : _('If you require this feature please contact your system administrator.')
             }
-
             return {'warning': warning, 'value': res}
-
 
         if discount_type == "paired_dsc":
 
             res['discount_type'] = 'simple_dsc'
-
             warning = {
                 'title': _('Discount type!'),
                 'message' : _('If you require this feature please contact your system administrator.')
             }
-
             return {'warning': warning, 'value': res}
 
         if discount_type == "paired_set_dsc":
 
             res['discount_type'] = 'simple_dsc'
-
             warning = {
                 'title': _('Discount type!'),
                 'message' : _('If you require this feature please contact your system administrator.')
             }
-
             return {'warning': warning, 'value': res}
-
-
-
 
 
 
@@ -236,26 +199,6 @@ class pos_adv_discount(osv.osv):
         else:
             return
 
-       # counter_id = context.get('active_id')
-
-        """
-        if discount_type == "" or discount_type == "none" or discount_type is False:
-            #res['amount'] = 0
-            res['discount_type'] = 'simple_dsc'
-            return {'value': res}
-
-        if discount_type not in "simple_dsc":
-            #res['amount'] = 0
-            res['discount_type'] = 'simple_dsc'
-
-            warning = {
-                'title': _('Discount type!'),
-                'message' : _('If you require this feature please contact your system administrator.')
-            }
-
-        """
-
-
 
     _columns = {
 
@@ -263,9 +206,6 @@ class pos_adv_discount(osv.osv):
         'code': fields.char('Code', size=50, required=True),
         'default_debt_account': fields.char('Default debt account', size=20),
         'default_credit_account': fields.char('Default credit account', size=20),
-
-        #'default_debt_account': fields.many2one('account.account', 'Credit Account'),
-        #'default_credit_account': fields.many2one('account.account', 'Debit Account'),
 
         'journal_id': fields.many2one('account.journal', 'Available Journal'),
 
@@ -295,43 +235,28 @@ class pos_adv_discount(osv.osv):
 
         'active': fields.boolean('Active Discount', default=True),
 
-        # 'special_rule_ids': fields.one2many('fleet.vehicle.cost', 'parent_id', 'Included Services'),
-        # 'product_1': fields.one2many('product.template', 'ad_product_1', 'Product 1'),
-
         'product_1': fields.many2one('product.product', 'Product 1', change_default=True, select=True),
         'pro_val_1': fields.integer('val 1'),
 
-        #'product_2': fields.one2many('product.template', 'ad_product_2', 'Product 2'),
         'product_2': fields.many2one('product.product', 'Product 2', change_default=True, select=True),
         'pro_val_2': fields.integer('val 2'),
-
 
         }
 
     _defaults = {
-
         'cfilter': 'all',
         'pfilter': 'all',
         'start_date': datetime.datetime.today(),
-
-
     }
 
     def create(self, cr, uid, vals, context=None):
         context = dict(context or {})
 
         result = super(pos_adv_discount, self).create(cr, uid, vals, context)
-
-                    #result = super(account_move, self).create(cr, uid, vals, c)
-       # tmp = self.validate(cr, uid, [result], context)
-
         self.validate(cr, uid, [result], context=context)
         self.validate_amount(cr, uid, [result], context=context)
 
         return result
-
-
-
 
     def write(self, cr, uid, ids, vals, context=None):
 
@@ -342,24 +267,19 @@ class pos_adv_discount(osv.osv):
         result = super(pos_adv_discount, self).write(cr, uid, ids, vals, context=context)
         self.validate(cr, uid, ids, context=context)
         self.validate_amount(cr, uid, ids, context=context)
-
         return result
-
 
     def _get_date_range(self, cr, uid, ids, date_from=None, date_to=None ,  context=None):
 
         date_list = []
 
         for dd in rrule.rrule(rrule.DAILY,
-
-                  dtstart=datetime.datetime.strptime(date_from, "%Y-%m-%d %H:%M:%S"),
-                  until=datetime.datetime.strptime(date_to, "%Y-%m-%d %H:%M:%S")):
+                    dtstart=datetime.datetime.strptime(date_from, "%Y-%m-%d %H:%M:%S"),
+                    until=datetime.datetime.strptime(date_to, "%Y-%m-%d %H:%M:%S")):
 
             date_list.append(dd)
 
         return date_list
-
-
 
 
     def validate_amount(self, cr, uid, ids, context=None):
@@ -370,12 +290,10 @@ class pos_adv_discount(osv.osv):
             start_date = discount.start_date
             end_date = discount.end_date
 
-        #date_data = self._get_date_range(cr, uid, ids, start_date, end_date, context=context)
-
         #_logger.warning("date_data %s", date_data )
 
-        _logger.warning("start_date %s", start_date )
-        _logger.warning("end_date %s", end_date )
+        #_logger.warning("start_date %s", start_date )
+        #_logger.warning("end_date %s", end_date )
 
         adv_discount_ids = self.pool['pos.adv_discount'].search(cr, uid, [
 
@@ -387,9 +305,7 @@ class pos_adv_discount(osv.osv):
                 ], context=context)
 
 
-        _logger.warning("adv_discount_ids %s", adv_discount_ids )
-
-
+        #_logger.warning("adv_discount_ids %s", adv_discount_ids )
 
 
 
@@ -423,28 +339,7 @@ class pos_adv_discount(osv.osv):
 
 pos_adv_discount()
 
-    
-class res_users(osv.osv):
-    _inherit = 'res.partner'
-    _columns = {
 
-        'pos_ad_dic': fields.many2many('pos.adv_discount', 'pos_adv_disc_partner_rel', 'partner_id', 'pos_ad_dic_id', 'POS advance discount'),
-
-    }
-
-res_users()
-
-
-class product_product(osv.osv):
-    _name = 'product.product'
-    _inherit = 'product.product'
-    _columns = {
-
-        'pos_ad_dic': fields.many2many('pos.adv_discount', 'pos_adv_disc_product_rel', 'product_id', 'pos_ad_dic_id', 'POS advance discount'),
-
-        }
-
-product_product()
 
 
 

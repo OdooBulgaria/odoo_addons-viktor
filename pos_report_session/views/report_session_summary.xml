@@ -109,41 +109,30 @@
                                         t-field-options='{"widget": "monetary", "display_currency": "statement.currency"}'/>
                                 </td>
 
-
                                 <td class="text-right" groups="base.group_multi_currency">
                                     <span t-field="statement.currency"
                                         t-field-options='{"widget": "monetary", "display_currency": "statement.currency"}'/>
                                 </td>
 
                             </tr>
+
+                <t t-set="total_variable" t-value="0.00"/>
+                <p t-foreach="o.statement_ids" t-as="i">
+                     <t t-set="total_variable" t-value="total_variable+i.total_entry_encoding"/>
+                </p>
+
+                            <tr>
+
+                                <td class="text-right"></td>
+                                <td class="text-left">GRAND TOTAL:</td>
+                                <td class="text-right"> <span t-esc="formatLang(total_variable, currency_obj=res_company.currency_id)" /> </td>
+
+                            </tr>
+
                         </tbody>
                     </table>
 
-                    <t t-foreach="o.statement_ids" t-as="statement">
-                        <h4 t-if="statement.line_ids">Statement Details: <span t-esc="statement.name"/></h4>
 
-                        <table class="table table-condensed" t-if="statement.line_ids">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Reference</th>
-                                    <th class="text-right">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="statement.line_ids" t-as="line">
-                                    <td><span t-field="line.date"/></td>
-                                    <td><span t-field="line.name"/></td>
-                                    <td><span t-field="line.ref"/></td>
-                                    <td class="text-right">
-                                        <span t-field="line.amount"
-                                            t-field-options='{"widget": "monetary", "display_currency": "statement.currency"}'/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </t>
                 </div>
             </t>
         </t>

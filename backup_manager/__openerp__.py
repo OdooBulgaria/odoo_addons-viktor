@@ -2,11 +2,16 @@
 
 {
     'name' : 'Automatic BackUp Manager Odoo',
-    'version' : '8.0.0.3',
+    'version' : '1.0.0',
     'author' : 'Viktor Vorobjov',
     'category': 'Cron',
     'description' : """
 
+        Backup manager for odoo. You can backup any database from diferent servers, to local folder on the server.
+
+        Restore over standart - database manager in odoo.
+
+        Also you can install Yandex Disk connector and back all to yandex disk.
     
     """,
     'website' : 'http://www.prolv.net',

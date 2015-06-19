@@ -2,16 +2,16 @@
 
 
 {
-    'name': 'POS Advance Discount',
+    'name': 'POS access extended',
     'version': '1.0',
     'category': 'Point of Sale',
     'sequence': 6,
-    'summary': 'POS Advance Discount for the Point of Sale ',
+    'summary': 'Access extended Discount and Price for the Point of Sale ',
     'description': """
 
 =======================
 
-This module adds POS Advance Discount features to the Point of Sale:
+This module adds constol access to Discount and Price features to the Point of Sale:
 
 
 """,
@@ -20,15 +20,12 @@ This module adds POS Advance Discount features to the Point of Sale:
     'website': 'https://straga.github.io',
     'data': [
         'views/templates.xml',
-        'pos_adv_discount_views.xml',
-        'pos_order_in_views.xml',
-        'security/ir.model.access.csv',
+        'views/views.xml',
     ],
     'qweb':[
 
-        'static/src/xml/adv_discount.xml',
+        'static/src/xml/access_ext.xml',
     ],
     'installable': True,
     'auto_install': False,
 }
-

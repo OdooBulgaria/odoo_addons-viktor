@@ -2,18 +2,17 @@
 
 {
     'name' : 'Warning Popup Message',
-    'version' : '8.0.0.2',
+    'version' : '1.0.0',
     'author' : 'Viktor Vorobjov',
-    'category': 'Cron',
+    'category': 'Base',
     'description' : """
-
-    
+        Popup message core. Shows message without stop function.
     """,
-    'website' : 'http://www.prolv.net',
+    'website' : 'http://straga.github.io',
+    'images': ['static/description/icon.png'],
     'depends' : ['base_setup'],
     'data': [
         'mpopup.xml',
-
     ],
     'installable': True,
 }
