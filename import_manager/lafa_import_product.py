@@ -351,3 +351,5 @@ class ImpLafaProduct(osv.osv):
 
 
 
+
+

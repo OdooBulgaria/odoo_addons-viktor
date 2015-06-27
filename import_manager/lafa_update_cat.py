@@ -200,9 +200,6 @@ class UpdLafaProduct(osv.osv):
             else:
                 _logger.warning("Exist in internal categ. Name = %s ", pos_name )
 
-
-
-
         #return self.pool.get('warning').info(cr, uid, title='Import Category', message="Import for: %s  - %s , try import = %s, but only new = %s" %( file_name, dir_path, rowNum-1, rownew))
         return True
 

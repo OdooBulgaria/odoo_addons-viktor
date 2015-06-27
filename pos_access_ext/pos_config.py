@@ -13,7 +13,7 @@ class on_change_function(models.Model):
     # Inhertis the model pos.config
     _inherit = 'pos.config'
 
-    secret_access = fields.Char(string='Secret Access')
+    secret_access = fields.Char(string='Manager code')
 
 
 

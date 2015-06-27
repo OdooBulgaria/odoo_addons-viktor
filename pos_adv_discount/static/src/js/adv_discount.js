@@ -297,7 +297,7 @@ if ( advdiscount.discount_type == "simple_dsc" ) {
 //end
             }
 
-var currency_rounding = this.pos.currency.rounding;
+            var currency_rounding = this.pos.currency.rounding;
 
             for (var i = 0, len = orderlines.length; i < len; i++) {
 
@@ -306,26 +306,18 @@ var currency_rounding = this.pos.currency.rounding;
                 var product_id = orderline.get_product().id;
                 var category_id = orderline.get_product().pos_categ_id[0];
 
-
                 var quant = orderline.get_quantity();
-
-
 
                 var customer_detect_for_customer = 0;
                 var customer_detect_for_cp_customer = 0 ;
                 var customer_detect_for_cc_customer = 0;
 
-
-
                 var all_all_percent = [];
-
                 var all_all_amount = [];
-
 
                 var simplelist_exc_bxgfy = _.pluck(exc_bxgfy, 'id');
 
                 var action_bxgfy = false;
-
 
                 if (_.include(simplelist_exc_bxgfy, product_id) == true) {
 
@@ -352,19 +344,10 @@ var currency_rounding = this.pos.currency.rounding;
                     var val_1 = prod_disc[0].pro_val_1;
                     var val_2 = prod_disc[0].pro_val_2;
 
-
-
-
-        //            if (quant % val_1 == 0){
-
-                        action_buy_x_get_fixed_price = true;
-
-       //             }
+                    action_buy_x_get_fixed_price = true;
 
 
                 }
-
-
 
 
                 if (action_bxgfy == true || action_buy_x_get_fixed_price == true ) {
@@ -431,10 +414,7 @@ var currency_rounding = this.pos.currency.rounding;
 
                             }
 
-
-
                         }
-
 
 
                         //all_all_amount.push(new_discount);
@@ -442,7 +422,6 @@ var currency_rounding = this.pos.currency.rounding;
                         all_all_percent.push(new_discount);
 
                     }
-
 
 
 
@@ -490,7 +469,6 @@ var currency_rounding = this.pos.currency.rounding;
                     }
 
 
-
 //select customer to category
                     if (customer_detect_for_cc_customer > 0) {
 
@@ -498,7 +476,6 @@ var currency_rounding = this.pos.currency.rounding;
                         all_all_amount.push(supersum(_.where(amounts_cc_category, {val_met: 'amount'}),category_id));
 
                     }
-
 
 // select customer to product
                     if (customer_detect_for_cp_customer > 0) {
@@ -530,7 +507,11 @@ var currency_rounding = this.pos.currency.rounding;
                 }
 
 
-              var sum_all_all_percent = sum(all_all_percent);
+                var sum_all_all_percent = sum(all_all_percent);
+
+                var discount_manual = orderline.get_discountManual();
+
+                var sum_all_all_percent = sum_all_all_percent+(discount_manual*1);
 
 
                 if (sum_all_all_percent > 100 ) {
@@ -539,7 +520,17 @@ var currency_rounding = this.pos.currency.rounding;
                 });
                 }
 
-               if (dscv != sum_all_all_percent &&  sum_all_all_percent < 100 ) {
+                if (sum_all_all_percent < 0 ) {
+                   this.pos_widget.screen_selector.show_popup('error',{
+                    message: _t('Warning: '+orderline.get_product().display_name+' - Product has discount less than 0% .'),
+                });
+                }
+
+
+
+               if (dscv != sum_all_all_percent &&  sum_all_all_percent < 100 && sum_all_all_percent >= 0 ) {
+
+
 
                     orderline.set_discount(sum_all_all_percent);
 

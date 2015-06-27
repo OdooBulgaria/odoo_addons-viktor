@@ -1,6 +1,4 @@
 function pos_access_ext_widgets (instance, module) {
-    // Setting Use strict
-    // "use strict";
 
     /**
      * This method is the one that load & render all the PoS widgets
@@ -21,10 +19,7 @@ function pos_access_ext_widgets (instance, module) {
             this.access_popup.appendTo(this.$el);
 
 
-
-
             // -------- Add to popup to list & hide -------
-
 
             this.screen_selector.popup_set.access = this.access_popup;
             this.screen_selector.popup_set['access'].hide();
@@ -37,18 +32,11 @@ function pos_access_ext_widgets (instance, module) {
     function pos_access_ext_include (instance, module) {
 
         var QWeb = instance.web.qweb;
-
-
         var _t = instance.web._t;
 
-     module.OrderWidget.include({
-
-
+        module.OrderWidget.include({
 
          set_value: function(val) {
-
-
-  var self = this;
 
         	var order = this.pos.get('selectedOrder');
         	if (this.editable && order.getSelectedLine()) {
@@ -61,8 +49,11 @@ function pos_access_ext_widgets (instance, module) {
 
                     $("label[name=mode]").text(mode);
                     $("input[name=password]").removeClass("error");
+                    $("input[name=value], textarea").val(order.getSelectedLine().get_discountManual());
                     $("input[name=password], textarea").val("");
-                    $("input[name=value], textarea").val("");
+                    $("span[name=label_value]").show();
+                    $("input[name=value]").show();
+                    $('.button_ok').text('Change');
 
                     //order.getSelectedLine().set_discount(val);
 
@@ -73,19 +64,42 @@ function pos_access_ext_widgets (instance, module) {
                     $("label[name=mode]").text(mode);
                     $("input[name=password]").removeClass("error");
                     $("input[name=password], textarea").val("");
-                    $("input[name=value], textarea").val("");
+                    //$("input[name=value], textarea").val("");
+                    $("input[name=value], textarea").val(order.getSelectedLine().get_unit_price());
+                    $("span[name=label_value]").show();
+                    $("input[name=value]").show();
+                    $('.button_ok').text('Change');
 
 
                     //order.getSelectedLine().set_unit_price(val);
                 }
         	}
-        }
+         },
 
 
-     });
+        });
 
 
+        module.NumpadWidget.include({
 
+         clickDeleteLastChar: function() {
+
+            // return this.state.deleteLastChar();
+
+             this.pos_widget.screen_selector.show_popup('access');
+
+             $("label[name=mode]").text('remove');
+             $("input[name=password]").removeClass("error");
+             $("input[name=password], textarea").val("");
+             $("input[name=value], textarea").val("");
+             $("span[name=label_value]").hide();
+             $("input[name=value]").hide();
+             $('.button_ok').text('Remove');
+
+
+         },
+
+    });
 
 
 

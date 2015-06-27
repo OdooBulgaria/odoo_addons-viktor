@@ -142,7 +142,8 @@
 					    <field name="path" />
                         <button name="update_pos_category" type="object" string="Update POS Category" icon="gtk-network"/>
                         <button name="update_internal_category" type="object" string="Update Internal Category" icon="gtk-network"/>
-                        <button name="update_pos_to_internal_category" type="object" string="Update Internal from POS Category" icon="gtk-network"/>
+                        <button name="update_pos_to_internal_category" type="object" string="Import Internal Cat. from POS Cat." icon="gtk-network"/>
+
                     </group>
                   </sheet>
                 </form>

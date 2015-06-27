@@ -15,6 +15,7 @@
         'ean_import_view.xml',
         'ean_check_view.xml',
         'wizard/fix_category_view.xml',
+        'wizard/fix_product_view.xml',
     ],
     'installable': True,
 }
