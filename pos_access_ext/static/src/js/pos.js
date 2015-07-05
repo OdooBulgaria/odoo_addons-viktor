@@ -64,8 +64,8 @@ function pos_access_ext_widgets (instance, module) {
                     $("label[name=mode]").text(mode);
                     $("input[name=password]").removeClass("error");
                     $("input[name=password], textarea").val("");
-                    //$("input[name=value], textarea").val("");
-                    $("input[name=value], textarea").val(order.getSelectedLine().get_unit_price());
+                    $("input[name=value], textarea").val("");
+                    //$("input[name=value], textarea").val(order.getSelectedLine().get_unit_price());
                     $("span[name=label_value]").show();
                     $("input[name=value]").show();
                     $('.button_ok').text('Change');
