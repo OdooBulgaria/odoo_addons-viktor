@@ -54,6 +54,7 @@ function pos_access_ext_widgets (instance, module) {
                     $("span[name=label_value]").show();
                     $("input[name=value]").show();
                     $('.button_ok').text('Change');
+                    $("input[name=password]").focus();
 
                     //order.getSelectedLine().set_discount(val);
 
@@ -69,8 +70,8 @@ function pos_access_ext_widgets (instance, module) {
                     $("span[name=label_value]").show();
                     $("input[name=value]").show();
                     $('.button_ok').text('Change');
-
-
+                    $("input[name=password]").focus();
+                    
                     //order.getSelectedLine().set_unit_price(val);
                 }
         	}
@@ -95,6 +96,7 @@ function pos_access_ext_widgets (instance, module) {
              $("span[name=label_value]").hide();
              $("input[name=value]").hide();
              $('.button_ok').text('Remove');
+             $("input[name=password]").focus();
 
 
          },
